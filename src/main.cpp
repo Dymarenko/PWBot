@@ -1,6 +1,6 @@
 #include "process.h"
-int main(int argc, char **argv) {
-    Process *pr = new Process;
+int main() {
+	Process *pr = new Process;
 	pr->printPid();
-    return 0;
+	return 0;
 }

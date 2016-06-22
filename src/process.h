@@ -1,11 +1,10 @@
-#include <windows.h>
 class Process
 {
 public:
-	printPid();
+	void printPid();
 	Process();
-	~Process();
 private:
-	DWORD pid;
+	int pid;
 	void getPid(char* Name);
+	int readMem_32(int addr);
 };
