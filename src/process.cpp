@@ -2,9 +2,9 @@
 #include "addr.h"
 
 Process::Process(){
-	pid = getPid("elementclient.exe");
+	getPid("elimentclient.exe");
 }
-DWORD Process::getPid(char* Name){
+void Process::getPid(char* Name){
 	PROCESSENTRY32 ProcessEntry;
 	HANDLE pHandle;
 	pHandle = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
@@ -23,7 +23,7 @@ DWORD Process::getPid(char* Name){
 		loop=Process32Next(pHandle, &ProcessEntry);
 	}
 }
-DWORD Process::readMem(int addr)
+DWORD Process::readMem(DWORD addr)
 {
 	HANDLE hProc = OpenProcess(PROCESS_ALL_ACCESS,false,pid);
 	DWORD value;

@@ -1,5 +1,5 @@
-#include <wine/windows/windows.h>
-#include <wine/windows/tlhelp32.h>
+#include <windows.h>
+#include <tlhelp32.h>
 #ifndef PROCESS_H
 #define PROCESS_H
 class Process
