@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/misha/projects/c++/bot/src/main.cpp
+iostream
+-
+process.h
+/home/misha/projects/c++/bot/src/process.h
+
+/home/misha/projects/c++/bot/src/process.h
+windows.h
+-
+

@@ -1,6 +1,7 @@
 #include <iostream>
-
+#include "process.h"
 int main(int argc, char **argv) {
-    std::cout << "Hello, world!" << std::endl;
+    Process *pr = new Process;
+	pr->printPid();
     return 0;
 }
