@@ -1,0 +1,3 @@
+*.kdev4
+CMakeList.txt
+src/CMakeList.txt
