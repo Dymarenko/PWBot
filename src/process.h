@@ -1,3 +1,5 @@
+#ifndef PROCESS_H
+#define PROCESS_H
 class Process
 {
 public:
@@ -8,3 +10,4 @@ private:
 	void getPid(char* Name);
 	int readMem_32(int addr);
 };
+#endif

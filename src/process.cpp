@@ -2,7 +2,7 @@
 #include <wine/windows/windows.h>
 #include <wine/windows/tlhelp32.h>
 Process::Process(){
-	pid = getPid();
+	pid = getPid("elementclient.exe");
 }
 int Process::getPid(char* Name){
 	PROCESSENTRY32 ProcessEntry;
