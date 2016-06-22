@@ -5,9 +5,9 @@ class Process
 public:
 	void printPid();
 	Process();
+	int readMem(int addr);
 private:
 	int pid;
 	void getPid(char* Name);
-	int readMem_32(int addr);
 };
 #endif

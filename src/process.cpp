@@ -23,9 +23,13 @@ int Process::getPid(char* Name){
 		loop=Process32Next(pHandle, &ProcessEntry);
 	}
 }
-int Process::readMem_32(int addr)
+int Process::readMem(int addr)
 {
 	HANDLE hProc = OpenProcess(PROCESS_ALL_ACCESS,false,pid);
+	int value;
+	ReadProcessMemory(hProc,(void*)addr,&value,4,0);
+	CloseHandle(hProc);
+	return value;
 }
 #include <iostream>
 void Process::printPid(){
