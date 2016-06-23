@@ -6,6 +6,7 @@ class Person
 {
 public:
 	Person();
+	void get();
 private:
 	Process *prc;
 	float y;

@@ -1,6 +1,11 @@
 #include "person.h"
 #include "addr.h"
+#include <iostream>
 Person::Person(){
 	*prc = new Process;
-	HP = prc->readMem(BaseAddr + PersStruct + PersHP);
+	HP = prc->readMem(prc->jumpToPersStruct() + 0x494);
+	
+}
+void Person::get(){
+	std::cout<<"HP:"<<HP<<"\n";
 }

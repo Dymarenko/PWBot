@@ -1,8 +1,7 @@
-#include "process.h"
-
+#include "person.h"
 
 int main() {
-	Process *pr = new Process;
-	pr->printPid();
+	Person *per = new Person;
+	per->get();
 	return 0;
 }

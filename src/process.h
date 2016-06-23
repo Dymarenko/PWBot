@@ -1,3 +1,5 @@
+#include <wine/windows/windows.h>
+#include <wine/windows/tlhelp32.h>
 #ifndef PROCESS_H
 #define PROCESS_H
 class Process
@@ -5,9 +7,10 @@ class Process
 public:
 	void printPid();
 	Process();
-	int readMem(int addr);
+	DWORD readMem(DWORD addr);
 private:
-	int pid;
+	DWORD pid;
 	void getPid(char* Name);
+	DWORD jumpToPersStruct();
 };
 #endif
