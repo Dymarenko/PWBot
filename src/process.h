@@ -8,9 +8,9 @@ public:
 	void printPid();
 	Process();
 	DWORD readMem(DWORD addr);
+	DWORD jumpToPersStruct();
 private:
 	DWORD pid;
 	void getPid(char* Name);
-	DWORD jumpToPersStruct();
 };
 #endif

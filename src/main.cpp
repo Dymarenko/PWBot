@@ -3,6 +3,6 @@
 int main() {
 	Person *per = new Person;
 	per->get();
-	getchar();
+	system("pause");
 	return 0;
 }

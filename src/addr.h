@@ -3,4 +3,4 @@
 
 #define PersStruct 0x34
 
-#define PersHP 0x494
+#define PersHP 0x4A8

@@ -1,24 +1,28 @@
 #include "process.h"
 #include "addr.h"
+#include <iostream>
+#include <cstring>
 
 Process::Process(){
-	getPid("elimentclient.exe");
+	getPid("elementclient.exe");
 }
 void Process::getPid(char* Name){
 	PROCESSENTRY32 ProcessEntry;
 	HANDLE pHandle;
 	pHandle = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 	ProcessEntry.dwSize = sizeof(ProcessEntry);
-	pid=0;
+	pid=1995;
 	bool loop=Process32First(pHandle, &ProcessEntry);
 	while (loop)
 	{
 		char* nm=ProcessEntry.szExeFile;
-		if (nm==Name)
+		std::cout<<nm<<" "<<Name<<"\n";
+		if (strcmp((char*)nm, Name) == 0)
 		{
-		pid = ProcessEntry.th32ProcessID;
-		CloseHandle(pHandle);
-		break;
+			std::cout<<"\nMATCH!!!\n\n";
+			pid = ProcessEntry.th32ProcessID;
+			CloseHandle(pHandle);
+			break;
 		}
 		loop=Process32Next(pHandle, &ProcessEntry);
 	}
@@ -27,7 +31,7 @@ DWORD Process::readMem(DWORD addr)
 {
 	HANDLE hProc = OpenProcess(PROCESS_ALL_ACCESS,false,pid);
 	DWORD value;
-	ReadProcessMemory(hProc,(void*)addr,&value,4,0);
+	ReadProcessMemory(hProc, (void*)addr, &value, 4, 0);
 	CloseHandle(hProc);
 	return value;
 }
