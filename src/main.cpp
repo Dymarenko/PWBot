@@ -3,6 +3,6 @@
 int main() {
 	Person *per = new Person;
 	per->get();
-	system("pause");
+	system("PAUSE");
 	return 0;
 }

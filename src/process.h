@@ -8,6 +8,7 @@ public:
 	void printPid();
 	Process();
 	DWORD readMem(DWORD addr);
+    float readMem_f(DWORD addr);
 	DWORD jumpToPersStruct();
 private:
 	DWORD pid;

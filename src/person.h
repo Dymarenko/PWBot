@@ -9,10 +9,12 @@ public:
 	void get();
 private:
 	Process *prc;
-	float y;
 	float x;
-	int MP;
-	int HP;
+	float y;
+	float z;
+	DWORD MP;
+	DWORD HP;
+	DWORD EXP;
 };
 
 #endif // PERSON_H
