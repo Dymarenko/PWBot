@@ -8,3 +8,4 @@
 #define PersXcoord 0x003C
 #define PersZcoord 0x0040
 #define PersYcoord 0x0044
+#define PersName 0x670

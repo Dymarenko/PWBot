@@ -27,19 +27,19 @@ void Process::getPid(char* Name){
 }
 DWORD Process::readMem(DWORD addr)
 {
-  HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
-  DWORD value;
-  ReadProcessMemory(hProcess, (void*)addr, &value, 4, 0);
-  CloseHandle(hProcess);
-  return value;
+    HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
+    DWORD value;
+    ReadProcessMemory(hProcess, (void*)addr, &value, 4, 0);
+    CloseHandle(hProcess);
+    return value;
 }
 float Process::readMem_f(DWORD addr)
 {
-  HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
-  float value;
-  ReadProcessMemory(hProcess, (void*)addr, &value, sizeof(float), 0);
-  CloseHandle(hProcess);
-  return value;
+    HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
+    float value;
+    ReadProcessMemory(hProcess, (void*)addr, &value, sizeof(float), 0);
+    CloseHandle(hProcess);
+    return value;
 }
 DWORD Process::jumpToPersStruct(){
 	DWORD buff;
@@ -47,6 +47,14 @@ DWORD Process::jumpToPersStruct(){
 	buff = readMem(buff + PersStruct);
 	return buff;
 }
-void Process::printPid(){
-	std::cout << pid << "\n";
+wchar_t* Process::readMem_9s(DWORD addr)
+{
+    HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
+    wchar_t* value;
+    ReadProcessMemory(hProcess, (void*)addr, &value, sizeof(wchar_t) * 8, 0);
+    CloseHandle(hProcess);
+    return value;
+}
+DWORD Process::givepid(){
+	return pid;
 }

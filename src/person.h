@@ -9,6 +9,7 @@ public:
 	void get();
 private:
 	Process *prc;
+	wchar_t* Name;
 	float x;
 	float y;
 	float z;
