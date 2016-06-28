@@ -9,7 +9,7 @@ public:
 	Process();
 	DWORD readMem(DWORD addr);
     float readMem_f(DWORD addr);
-    wchar_t* readMem_9s(DWORD addr);
+	wchar_t* readMem_8s(DWORD addr);
 	DWORD jumpToPersStruct();
 private:
 	DWORD pid;

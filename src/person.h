@@ -8,8 +8,9 @@ public:
 	Person();
 	void get();
 private:
+	void reInit();
 	Process *prc;
-	wchar_t* Name;
+	wchar_t *Name;
 	float x;
 	float y;
 	float z;

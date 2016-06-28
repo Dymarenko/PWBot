@@ -1,5 +1,6 @@
 #include "process.h"
 #include "addr.h"
+#include <Windows.h>
 #include <cstring>
 #include <iostream>
 
@@ -25,35 +26,30 @@ void Process::getPid(char* Name){
 		loop=Process32Next(pHandle, &ProcessEntry);
 	}
 }
-DWORD Process::readMem(DWORD addr)
-{
+DWORD Process::readMem(DWORD addr){
     HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
     DWORD value;
-    ReadProcessMemory(hProcess, (void*)addr, &value, 4, 0);
+    ReadProcessMemory(hProcess, (void*)addr, &value, sizeof(value), 0);
     CloseHandle(hProcess);
     return value;
 }
-float Process::readMem_f(DWORD addr)
-{
+float Process::readMem_f(DWORD addr){
     HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
     float value;
-    ReadProcessMemory(hProcess, (void*)addr, &value, sizeof(float), 0);
+    ReadProcessMemory(hProcess, (void*)addr, &value, sizeof(value), 0);
     CloseHandle(hProcess);
     return value;
+}
+wchar_t* Process::readMem_8s(DWORD addr)
+{
+	HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
+	wchar_t value[8];
+	ReadProcessMemory(hProcess, (void*)addr, &value, sizeof(value), 0);
+	CloseHandle(hProcess);
+	return value;
 }
 DWORD Process::jumpToPersStruct(){
-	DWORD buff;
-	buff = readMem(GameAddr);
-	buff = readMem(buff + PersStruct);
-	return buff;
-}
-wchar_t* Process::readMem_9s(DWORD addr)
-{
-    HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
-    wchar_t* value;
-    ReadProcessMemory(hProcess, (void*)addr, &value, sizeof(wchar_t) * 8, 0);
-    CloseHandle(hProcess);
-    return value;
+	return readMem(readMem(GameAddr) + PersStruct);
 }
 DWORD Process::givepid(){
 	return pid;
