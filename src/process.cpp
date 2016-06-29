@@ -6,6 +6,7 @@
 
 Process::Process(){
 	getPid("elementclient.exe");
+	inj = new injector(pid);
 }
 void Process::getPid(char* Name){
 	PROCESSENTRY32 ProcessEntry;
@@ -26,6 +27,13 @@ void Process::getPid(char* Name){
 		loop=Process32Next(pHandle, &ProcessEntry);
 	}
 }
+byte Process::readMem_b(DWORD addr) {
+	HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
+	byte value;
+	ReadProcessMemory(hProcess, (void*)addr, &value, sizeof(value), 0);
+	CloseHandle(hProcess);
+	return value;
+}
 DWORD Process::readMem(DWORD addr){
     HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
     DWORD value;
@@ -40,16 +48,19 @@ float Process::readMem_f(DWORD addr){
     CloseHandle(hProcess);
     return value;
 }
-wchar_t* Process::readMem_8s(DWORD addr)
+wchar_t* Process::readMem_9s(DWORD addr)
 {
 	HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
-	wchar_t value[8];
+	wchar_t value[9];
 	ReadProcessMemory(hProcess, (void*)addr, &value, sizeof(value), 0);
 	CloseHandle(hProcess);
 	return value;
 }
 DWORD Process::jumpToPersStruct(){
 	return readMem(readMem(GameAddr) + PersStruct);
+}
+DWORD Process::jumpToPersInventory() {
+	return readMem(jumpToPersStruct() + PersInv);
 }
 DWORD Process::givepid(){
 	return pid;

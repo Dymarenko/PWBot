@@ -9,5 +9,11 @@
 #define PersXcoord 0x003C
 #define PersZcoord 0x0040
 #define PersYcoord 0x0044
-#define PersName 0x6B0
-#define PersHIR 0xC0
+#define PersName 0x06B0
+#define PersHIR 0x00C0
+#define PersLvl 0x04A0
+#define PersMedF 0x740
+
+#define PersInv 0xF48
+
+#define InvCount 0x10

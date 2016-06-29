@@ -14,9 +14,13 @@ private:
 	float x;
 	float y;
 	float z;
+	byte Med;
+	DWORD invC;
+	DWORD Lvl;
 	DWORD MP;
 	DWORD HP;
 	DWORD EXP;
+	DWORD targetWID;
 };
 
 #endif // PERSON_H

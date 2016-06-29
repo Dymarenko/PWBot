@@ -5,14 +5,8 @@
 class injector
 {
 public:
-    injector();
-    void targetmob(DWORD wid);
-	void setFuncAlloc();
+    injector(DWORD PID);
     DWORD pid;
-private:
-    void* pFunc;
-    void* pParams;
-    byte injectAndExecute(void* func, void* param);
 };
 
 #endif // INJECTOR_H
