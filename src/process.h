@@ -1,23 +1,27 @@
 #include <windows.h>
 #include <tlhelp32.h>
-#include "injector.h"
 
 #ifndef PROCESS_H
 #define PROCESS_H
 class Process
 {
 public:
-	DWORD givepid();
-	Process();
+	Process(DWORD PID);
+	~Process();
+
+	DWORD Process::givepid();
+
 	DWORD readMem(DWORD addr);
-    float readMem_f(DWORD addr);
+	float readMem_f(DWORD addr);
 	byte readMem_b(DWORD addr);
-	wchar_t* readMem_9s(DWORD addr);
+	wchar_t* readMem_20s(DWORD addr);
 	DWORD jumpToPersStruct();
 	DWORD jumpToPersInventory();
-	injector *inj;
+
 private:
 	DWORD pid;
-	void getPid(char* Name);
+	HANDLE prHandle;
+	HWND winHandle;
+	HWND scdwinHandle;
 };
 #endif

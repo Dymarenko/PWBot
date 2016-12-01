@@ -4,56 +4,52 @@
 #include <cstring>
 #include <iostream>
 
-Process::Process(){
-	getPid("elementclient.exe");
-	inj = new injector(pid);
-}
-void Process::getPid(char* Name){
-	PROCESSENTRY32 ProcessEntry;
-	HANDLE pHandle;
-	pHandle = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-	ProcessEntry.dwSize = sizeof(ProcessEntry);
-	pid=-1;
-	bool loop=Process32First(pHandle, &ProcessEntry);
-	while (loop)
-	{
-		char* nm=ProcessEntry.szExeFile;
-		if (strcmp((char*)nm, Name) == 0)
-		{
-			pid = ProcessEntry.th32ProcessID;
-			CloseHandle(pHandle);
-			break;
+HWND winH;
+BOOL CALLBACK enumWindowsProc(HWND hwnd, LPARAM lParam)
+{
+	DWORD bpid;
+	char ClName[50];
+	GetWindowThreadProcessId(hwnd, &bpid);
+	if (bpid == lParam) {
+		GetClassName(hwnd, ClName, sizeof(ClName));
+		if (!strcmp(ClName, "ElementClient Window")) {
+			winH = hwnd;
+			return false;
 		}
-		loop=Process32Next(pHandle, &ProcessEntry);
 	}
+	else return true;
+}
+Process::Process(DWORD PID){
+	pid = PID;
+	prHandle = OpenProcess(PROCESS_ALL_ACCESS, false, PID);
+	EnumWindows(enumWindowsProc, pid);
+	winHandle = winH;
+	SetWindowPos(winHandle, HWND_TOP, -8, -31, 1382, 766, SWP_SHOWWINDOW);
+}
+Process::~Process() {
+	CloseHandle(prHandle);
 }
 byte Process::readMem_b(DWORD addr) {
-	HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
 	byte value;
-	ReadProcessMemory(hProcess, (void*)addr, &value, sizeof(value), 0);
-	CloseHandle(hProcess);
+	ReadProcessMemory(prHandle, (void*)addr, &value, sizeof(value), 0);
 	return value;
 }
 DWORD Process::readMem(DWORD addr){
-    HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
     DWORD value;
-    ReadProcessMemory(hProcess, (void*)addr, &value, sizeof(value), 0);
-    CloseHandle(hProcess);
+    ReadProcessMemory(prHandle, (void*)addr, &value, sizeof(value), 0);
     return value;
 }
 float Process::readMem_f(DWORD addr){
-    HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
     float value;
-    ReadProcessMemory(hProcess, (void*)addr, &value, sizeof(value), 0);
-    CloseHandle(hProcess);
+    ReadProcessMemory(prHandle, (void*)addr, &value, sizeof(value), 0);
     return value;
 }
-wchar_t* Process::readMem_9s(DWORD addr)
+wchar_t* Process::readMem_20s(DWORD addr)
 {
-	HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, pid);
-	wchar_t value[9];
-	ReadProcessMemory(hProcess, (void*)addr, &value, sizeof(value), 0);
-	CloseHandle(hProcess);
+	wchar_t value[20];
+	for (int i = 0; i < 20; i++) {
+		ReadProcessMemory(prHandle, (void*)(addr + sizeof(value[i]) * i), &value[i], sizeof(value[i]), 0);
+	}
 	return value;
 }
 DWORD Process::jumpToPersStruct(){

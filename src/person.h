@@ -1,16 +1,20 @@
-#include "process.h"
 #ifndef PERSON_H
 #define PERSON_H
+#include "process.h"
 
 class Person
 {
 public:
-	Person();
-	void get();
+	Person(DWORD PID);
+	wchar_t* getName();
+	DWORD getHP();
+	float getX();
+	float getY();
+	float getZ();
 private:
 	void reInit();
 	Process *prc;
-	wchar_t *Name;
+	wchar_t Name [20];
 	float x;
 	float y;
 	float z;

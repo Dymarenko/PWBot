@@ -2,21 +2,10 @@
 #include "addr.h"
 #include <iostream>
 #include <clocale>
-Person::Person(){
-	prc = new Process;
+
+Person::Person(DWORD PID){
+	prc = new Process(PID);
 	reInit();
-	system("pause");
-}
-void Person::get(){
-	std::wcout << "Name:" << Name << "\n";
-	std::cout << std::dec;
-	std::cout << "X:" << x << "\t" << "HP:" << HP << "\t" << "Lvl:" <<Lvl << "\n";
-	std::cout << "Y:" << y << "\t" << "MP:" << MP << "\n";
-	std::cout << "Z:" << z << "\n";
-	std::cout << std::hex << "Target:" << targetWID << "\n";
-	std::cout << "Medit.:" << (bool)Med << "\n";
-	reInit();
-	Sleep(41);
 }
 void Person::reInit()
 {
@@ -26,8 +15,24 @@ void Person::reInit()
 	y = prc->readMem_f(prc->jumpToPersStruct() + PersYcoord) / 10 + 551;
 	z = prc->readMem_f(prc->jumpToPersStruct() + PersZcoord) / 10;
 	Lvl = prc->readMem(prc->jumpToPersStruct() + PersLvl);
-	Name = prc->readMem_9s(prc->readMem(prc->jumpToPersStruct() + PersName) + 0x0);
-	Med = prc->readMem_b(prc->jumpToPersStruct() + 0x740);
+	wcscpy(Name, prc->readMem_20s(prc->readMem(prc->jumpToPersStruct() + PersName) + 0x0));
+	Med = prc->readMem_b(prc->jumpToPersStruct() + PersMedF);
 	invC = prc->readMem(prc->jumpToPersInventory() + InvCount);
 	targetWID = prc->readMem(prc->jumpToPersStruct() + 0xD3C);
+}
+wchar_t* Person::getName() {
+	reInit();
+	return Name;
+}
+DWORD Person::getHP() {
+	return HP;
+}
+float Person::getX() {
+	return x;
+}
+float Person::getY() {
+	return y;
+}
+float Person::getZ() {
+	return z;
 }

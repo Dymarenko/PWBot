@@ -6,6 +6,7 @@ class injector
 {
 public:
     injector(DWORD PID);
+private:
     DWORD pid;
 };
 
